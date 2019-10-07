@@ -1,0 +1,29 @@
+<html>
+<head>
+    <style>
+            .output {color: chartreuse;}
+    </style>
+        <!-- LOAD p5.js library so we can use a few of its tools -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+        
+    <script>
+            var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=20190101&end_date=20191006&q=Raptors&api-key=nis8IaommCqeL2xa4GGyXDvs1uIdQmT1";
+            var articleCount = 0
+            
+            function setup() {noCanvas();loadJSON(url, gotData);}
+            
+            function gotData(data) {alert("FUNCTION GOT DATA ACTIVATED")
+                                    
+                                    var text =''
+                                    for (i=0; i < data.response.docs.length; i++) 
+                                    {text = text + data.response.docs[i].headline.main}
+                                    document.getElementById("test_output").innerHTML = text}
+        </script>
+    </head>
+    <body>
+        <h1>New York Times API: Articles from 2019 about Raptors</h1>
+        
+        <p id="test_output" class="output"></p>
+        
+    </body>
+</html>
