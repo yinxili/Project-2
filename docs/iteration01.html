@@ -12,12 +12,29 @@
             
             function setup() {noCanvas();loadJSON(url, gotData);}
             
-            function gotData(data) {alert("FUNCTION GOT DATA ACTIVATED")
+            function gotData(data) {appendToPage (data)
                                     
-                                    var text =''
-                                    for (i=0; i < data.response.docs.length; i++) 
-                                    {text = text + data.response.docs[i].headline.main}
-                                    document.getElementById("test_output").innerHTML = text}
+                                    var hits = data.response.meta.hits
+                                    for (var i = 1; i < 3; i++) {
+                                    loadJSON(url + '&page=' + i, appendToPage)}
+                                   }
+            function appendToPage(data) {
+                //MOVE the docs array part of JSON object to "articles" to save typing
+                var articles = data.response.docs;
+                //LOOP over the array, creating a heading and a paragraph for each article
+                for (var i = 0; i < articles.length; i++) {
+                    //increment the counter (so we can number the headlines)
+                    articleCount++
+                    //create a heading element, put text in it, append it to <BODY>
+                    h = document.createElement('h3')
+                    h.innerHTML = '(' + articleCount + ') ' + articles[i].headline.main
+                    document.body.appendChild(h);
+                    //create a paragraph element, put text in it, append it to <BODY>
+                    p = document.createElement('p')
+                    p.innerHTML = articles[i].snippet
+                    document.body.appendChild(p);  
+                  }
+            }
         </script>
     </head>
     <body>
